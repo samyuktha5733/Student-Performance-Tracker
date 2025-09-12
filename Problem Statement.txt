@@ -1,0 +1,3 @@
+Educational institutions often face challenges in efficiently tracking and managing students’ academic performance, attendance, and extracurricular activities. Teachers and administrators struggle with manual processes for recording grades, monitoring attendance, and generating performance reports, leading to delays, errors, and lack of actionable insights.
+
+The goal of this project is to develop a Salesforce-based Student Performance Tracker that centralizes student information, automates performance calculations, and provides interactive reports and dashboards. This solution enables teachers and administrators to make data-driven decisions, identify students needing additional support, and improve overall academic management—all within a secure and scalable platform.
