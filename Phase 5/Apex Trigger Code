@@ -1,3 +1,6 @@
+/*I created the Apex Trigger on Attendance to automate the calculation of attendance details at the Student level, 
+ensuring accurate and real-time updates of Total Working Days and Number of Days Present.*/
+
 trigger UpdateStudentAttendance on Attendance__c (after insert, after update) {
 
     // Set to collect all Student Ids from attendance records
