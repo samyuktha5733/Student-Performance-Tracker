@@ -1,4 +1,5 @@
-In many educational institutions, maintaining comprehensive records of student performance—including academic scores, attendance, and extracurricular activities—is often done manually or across multiple disconnected systems. This leads to delayed reporting, errors in attendance calculation, lack of real-time insights into student performance, and ineffective communication with parents.
+In many educational institutions, maintaining comprehensive records of student performance—including academic scores, attendance, and extracurricular activities—is often done manually or across multiple disconnected systems. 
+This leads to delayed reporting, errors in attendance calculation, lack of real-time insights into student performance, and ineffective communication with parents.
 
 The problem:
 Tracking student attendance and academic performance is time-consuming and error-prone.
@@ -6,5 +7,7 @@ Parents often receive delayed information about their child’s performance.
 Teachers and administrators lack a unified platform to manage students’ overall progress efficiently.
 
 Solution:
-Develop a Salesforce-based Student Performance Tracker that integrates student data management, attendance calculation, academic monitoring, and parent communication into a single, easy-to-use application. This system will automate attendance updates, calculate percentages, notify parents in real-time for failed subjects, and maintain a holistic view of student performance including extracurricular activities.
+Develop a Salesforce-based Student Performance Tracker that integrates student data management, attendance calculation, academic monitoring, and parent communication into a single, easy-to-use application. 
+This system will automate attendance updates, calculate percentages, notify parents in real-time for failed subjects, and maintain a holistic view of student performance including extracurricular activities.
+
 
