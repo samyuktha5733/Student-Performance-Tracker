@@ -1,0 +1,189 @@
+<template>
+    <lightning-card title="Student Hierarchy Navigator">
+        <template if:true={showClasses}>
+            <lightning-combobox 
+                name="class" 
+                label="Select Class"
+                value={selectedClass}
+                placeholder="Select a Class"
+                options={classOptions}
+                onchange={handleClassChange}>
+            </lightning-combobox>
+        </template>
+
+        <template if:true={showSections}>
+            <lightning-combobox 
+                name="section" 
+                label="Select Section"
+                value={selectedSection}
+                placeholder="Select a Section"
+                options={sectionOptions}
+                onchange={handleSectionChange}>
+            </lightning-combobox>
+        </template>
+
+        <template if:true={showStudents}>
+            <lightning-button label="Add Student" onclick={handleAddStudent}></lightning-button>
+            <lightning-button label="Refresh Students" onclick={fetchStudents} class="slds-m-left_small"></lightning-button>
+            <lightning-datatable key-field="Id" data={students} columns={studentColumns} onrowaction={handleStudentSelect} hide-checkbox-column>
+            </lightning-datatable>
+        </template>
+
+        <template if:true={showStudentDetails}>
+            <lightning-tabset variant="scoped">
+                <lightning-tab label="Attendance" value="attendance">
+                    <lightning-button label="Add Attendance" onclick={handleAddAttendance}></lightning-button>
+                    <lightning-button label="Refresh Attendance" onclick={fetchAttendance} class="slds-m-left_small"></lightning-button>
+                    <lightning-datatable key-field="Id" data={attendanceRecords} columns={attendanceColumns} hide-checkbox-column></lightning-datatable>
+                </lightning-tab>
+                <lightning-tab label="Academics" value="academics">
+                    <lightning-button label="Add Academic" onclick={handleAddAcademic}></lightning-button>
+                    <lightning-button label="Refresh Academics" onclick={fetchAcademics} class="slds-m-left_small"></lightning-button>
+                    <lightning-datatable key-field="Id" data={academicRecords} columns={academicColumns} hide-checkbox-column></lightning-datatable>
+                </lightning-tab>
+                <lightning-tab label="Activities" value="activities">
+                    <lightning-button label="Add Activity" onclick={handleAddActivity}></lightning-button>
+                    <lightning-button label="Refresh Activities" onclick={fetchActivities} class="slds-m-left_small"></lightning-button>
+                    <lightning-datatable key-field="Id" data={activityRecords} columns={activityColumns} hide-checkbox-column></lightning-datatable>
+                </lightning-tab>
+            </lightning-tabset>
+        </template>
+
+        <!-- Modal for adding student -->
+        <template if:true={showAddStudentModal}>
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-modal__title">Add Student</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-record-edit-form object-api-name="Student__c" onsuccess={handleStudentSave}>
+                            <lightning-messages></lightning-messages>
+                            <lightning-input-field field-name="Name"></lightning-input-field>
+                            <lightning-input-field field-name="Student_ID__c"></lightning-input-field>
+                            <lightning-input-field field-name="Date_of_Birth__c"></lightning-input-field>
+                            <lightning-input-field field-name="Contact_Number__c"></lightning-input-field>
+                            <lightning-input-field field-name="Parent_Email__c"></lightning-input-field>
+                            <lightning-input-field field-name="Number_of_Days_Present__c"></lightning-input-field>
+                            <lightning-input-field field-name="Total_Working_days__c"></lightning-input-field>
+                            <!-- Class and Section are pre-selected -->
+                            <lightning-input type="hidden" name="Class__c" value={selectedClass}></lightning-input>
+                            <lightning-input type="hidden" name="Section__c" value={selectedSection}></lightning-input>
+                            <lightning-button type="submit" label="Save"></lightning-button>
+                        </lightning-record-edit-form>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Modal for editing student -->
+        <template if:true={showEditStudentModal}>
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-modal__title">Edit Student</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-record-edit-form object-api-name="Student__c" record-id={editStudentData.Id} onsuccess={handleEditStudentSave}>
+                            <lightning-messages></lightning-messages>
+                            <lightning-input-field field-name="Name"></lightning-input-field>
+                            <lightning-input-field field-name="Student_ID__c"></lightning-input-field>
+                            <lightning-input-field field-name="Date_of_Birth__c"></lightning-input-field>
+                            <lightning-input-field field-name="Contact_Number__c"></lightning-input-field>
+                            <lightning-input-field field-name="Parent_Email__c"></lightning-input-field>
+                            <lightning-input-field field-name="Number_of_Days_Present__c"></lightning-input-field>
+                            <lightning-input-field field-name="Total_Working_days__c"></lightning-input-field>
+                            <lightning-input-field field-name="Class__c"></lightning-input-field>
+                            <lightning-input-field field-name="Section__c"></lightning-input-field>
+                            <lightning-button type="submit" label="Save"></lightning-button>
+                        </lightning-record-edit-form>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Modal for adding attendance -->
+        <template if:true={showAddAttendanceModal}>
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-modal__title">Add Attendance</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-record-edit-form object-api-name="Attendance__c" onsuccess={handleAttendanceSave}>
+                            <lightning-messages></lightning-messages>
+                            <lightning-input-field field-name="Attendance_Status__c"></lightning-input-field>
+                            <lightning-input-field field-name="Date__c"></lightning-input-field>
+                            <lightning-input-field field-name="Reason_for_Absence__c"></lightning-input-field>
+                            <lightning-input-field field-name="Student_ID__c" value={selectedStudentId}></lightning-input-field>
+                            <lightning-button type="submit" label="Save"></lightning-button>
+                        </lightning-record-edit-form>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Modal for adding academic -->
+        <template if:true={showAddAcademicModal}>
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-modal__title">Add Academic</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-record-edit-form object-api-name="Academic__c" onsuccess={handleAcademicSave}>
+                            <lightning-messages></lightning-messages>
+                            <lightning-input-field field-name="Name"></lightning-input-field>
+                            <lightning-input-field field-name="Exam__c"></lightning-input-field>
+                            <lightning-input-field field-name="Marks__c"></lightning-input-field>
+                            <lightning-input-field field-name="Total_Marks__c"></lightning-input-field>
+                            <lightning-input-field field-name="Student_ID__c" value={selectedStudentId}></lightning-input-field>
+                            <lightning-button type="submit" label="Save"></lightning-button>
+                        </lightning-record-edit-form>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Modal for adding activity -->
+        <template if:true={showAddActivityModal}>
+            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-modal__title">Add Activity</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-record-edit-form object-api-name="ExtraCurricular_Activity__c" onsuccess={handleActivitySave}>
+                            <lightning-messages></lightning-messages>
+                            <lightning-input-field field-name="Name"></lightning-input-field>
+                            <lightning-input-field field-name="Achievement__c"></lightning-input-field>
+                            <lightning-input-field field-name="Participation_Date__c"></lightning-input-field>
+                            <lightning-input-field field-name="Student_ID__c" value={selectedStudentId}></lightning-input-field>
+                            <lightning-button type="submit" label="Save"></lightning-button>
+                        </lightning-record-edit-form>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>
