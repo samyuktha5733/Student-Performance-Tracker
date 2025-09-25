@@ -1,0 +1,43 @@
+trigger UpdateStudentAttendance on Attendance__c (after insert, after update) {
+
+    // Set to collect all Student Ids from attendance records
+    Set<Id> studentIds = new Set<Id>();
+    for(Attendance__c att : Trigger.new) {
+        if(att.Student_ID__c != null) {
+            studentIds.add(att.Student_ID__c);
+        }
+    }
+
+    if(studentIds.isEmpty()) return;
+
+    // Query existing Student records
+    Map<Id, Student__c> studentMap = new Map<Id, Student__c>(
+        [SELECT Id, Total_Working_days__c, Number_of_Days_Present__c 
+         FROM Student__c 
+         WHERE Id IN :studentIds]
+    );
+
+    // Loop through Attendance records to update corresponding students
+    for(Attendance__c att : Trigger.new) {
+        if(att.Student_ID__c != null && studentMap.containsKey(att.Student_ID__c)) {
+            Student__c stud = studentMap.get(att.Student_ID__c);
+
+            // Initialize fields if null
+            if(stud.Total_Working_days__c == null) stud.Total_Working_days__c = 0;
+            if(stud.Number_of_Days_Present__c == null) stud.Number_of_Days_Present__c = 0;
+
+            // Increment total working days
+            stud.Total_Working_days__c += 1;
+
+            // Increment days present only if status is Present
+            if(att.Attendance_Status__c == 'Present') {
+                stud.Number_of_Days_Present__c += 1;
+            }
+        }
+    }
+
+    // Update all modified students
+    if(!studentMap.isEmpty()) {
+        update studentMap.values();
+    }
+}
