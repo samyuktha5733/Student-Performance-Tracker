@@ -1,62 +1,37 @@
 Phase 1 – Problem Understanding & Industry Analysis
 
 1. Requirement Gathering
-
-In this project, I will create a Salesforce app that helps teachers and school administrators manage student data easily. The app will allow:
-
-Storing student details like name, roll number, class, and contact information.
-Tracking academic performance such as grades, GPA, and assignments.
-Recording attendance and sending alerts if attendance is low.
-Managing extracurricular activities like sports and competitions.
-Generating reports and dashboards to track student progress.
-Ensuring secure access to data so only authorized users can view or edit information.
-
+Objective: Understand the needs of the school administration, teachers, and parents regarding student tracking and performance management.
+Key Requirements Identified:
+Maintain student records (personal, contact, class, section).
+Record and calculate attendance automatically based on daily inputs.
+Record academic scores and calculate percentages and pass/fail status.
+Notify parents when a student fails an exam.
+Track extracurricular activity participation.
+Provide a consolidated dashboard for administrators/teachers.
 
 2. Stakeholder Analysis
-
-Stakeholder	            Their Role	                         Their Needs
-
-Teachers	            Enter grades and attendance	         Easy data entry, notifications for missing data
-Administrators	            Manage student records and reports	 Complete visibility, data security, performance tracking
-Students	            View performance data	         Access to grades and attendance reports
-Parents	Monitor             children’s academic progress	 Notifications and detailed reports
-IT team (for reference)	    Set up Salesforce                  	 Ensure smooth functionality and data security
-
+Stakeholder	               Role	                                Needs / Concerns
+School Administrators	     Manage student records & reports	    Easy-to-access dashboard, real-time updates, accurate records
+Teachers	                 Record attendance & grades	          Efficient data entry, automatic calculations, notifications
+Parents	                   Monitor child performance	          Timely alerts, detailed exam & attendance reports
+Students	                 View performance	                    Transparency and visibility of progress
 
 3. Business Process Mapping
-
-In this project, the process will work as follows:
-
-1. I will set up student records with their basic details.
-2. Teachers will enter attendance and assignment grades.
-3. Validation rules will check for errors in data entry.
-4. Automated alerts will notify teachers and parents if attendance is below the required percentage or assignments are missing.
-5. Reports and dashboards will show students’ academic performance.
-6. Admins can approve or modify data when required.
-7. All information will be protected with role-based access and permissions.
-
+Current Process (Manual / Fragmented):
+Attendance recorded manually → Calculations done offline → Academic results recorded separately → Parent communication via calls or emails
+Proposed Salesforce Process:
+Teacher records attendance → Student object auto-updates Total_Working_days__c and Number_of_Days_Present__c.
+Teacher records academic scores → Academic object auto-calculates percentage and status.
+Record-triggered flow automatically sends email notifications to parents if percentage < 35%.
+All student data (attendance, academics, extracurricular) consolidated in a Lightning component dashboard.
 
 4. Industry-specific Use Case Analysis
-
-From my research, schools face these issues:
-
-Manual record-keeping using spreadsheets leads to mistakes.
-It takes too long to generate performance reports.
-There is no system to automatically notify teachers or parents.
-Communication gaps exist between students, teachers, and parents.
-
-My solution using Salesforce will:
-
-Organize all student data in one place.
-Automate alerts and workflows for performance monitoring.
-Provide secure and easy access to reports and dashboards.
-Support schools of all sizes with scalable and customizable features.
-
+Educational Institutions: Require digital transformation for record-keeping and parent communication.
+Use Case: Automate performance tracking and communication in schools to improve accuracy and efficiency.
+Competitive Advantage: Real-time updates, automation of repetitive tasks, consolidated view of student data, and easy accessibility via Salesforce platform.
 
 5. AppExchange Exploration
-
-I explored existing apps on AppExchange and found:
-
-Some apps are designed for large institutions and are expensive.
-Few apps cover academic tracking, attendance, and activities in one place.
-My app will be simple, cost-effective, and tailored to schools that need better data management and communication.
+Explored existing Salesforce Education apps such as Education Data Architecture, School Management Apps, and Parent Communication Tools.
+Identified gaps: Existing apps often don’t integrate attendance, academic, and extracurricular activities together with automated notifications.
+This project fills the gap with a custom-built Salesforce solution tailored for end-to-end student performance tracking.ter data management and communication.
