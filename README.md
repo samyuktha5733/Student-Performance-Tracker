@@ -1,14 +1,42 @@
-Student Performance Tracker
+# Student Performance Tracker
 
-# Phase 2: Org Setup & Configuration
-In Phase 2, the Salesforce environment for the Student Performance Tracker was set up. 
-This involved creating a Lightning App called Student Project App, along with custom objects for Student, Attendance, Grade, and Extracurricular Activity. 
-Each object includes necessary fields to store student information, track attendance, record grades with a formula field, and manage participation in activities. 
-Tabs were created for all objects to make them accessible in the app, and standard Salesforce tabs like Reports and Dashboards were added for analytics.
+## Phase 2: Org Setup & Configuration
+- Set up a Salesforce Developer Org.
+- Configured Lightning App settings, navigation items, and user profiles.
+- Prepared the Salesforce environment for development and testing.
 
-Phase 3: Data Modeling & Relationships
-In this phase, the data structure of the Student Performance Tracker app was designed by creating relationships, layouts, and visual models to ensure smooth tracking of student information. Lookup relationships were defined so that Attendance, Grades, and Extracurricular Activities are all linked to the Student object. 
-This allows every attendance record, grade, or activity to be associated with the correct student.
-The Student Page Layout was customized by creating new sections — Personal Information (Name, Roll No, DOB, Gender) and Contact Information (Contact Number, Parent Email). 
-A Compact Layout was also configured for the Student object, displaying key fields such as Student Name, Roll Number, Class, and Contact Number at the top of the record page for quick insights. 
-Finally, the Schema Builder was used to visualize the object model and confirm that Student is correctly connected with Attendance, Grades, and Activities.
+## Phase 3: Data Modeling & Relationships
+- Created four custom objects: Student, Attendance, Academic, and Extracurricular Activity.
+- Defined fields and relationships, including lookup relationships between Student and related objects.
+- Used Schema Builder to visualize object relationships and ensure a structured data model.
+
+## Phase 4: Business Logic Automation with Validation & Flows
+- Implemented Validation Rules to ensure data integrity across all objects.
+- Built Record-Triggered Flows to automate calculations and notifications (e.g., sending alerts when academic percentage < 35%).
+
+## Phase 5: Apex Trigger Development
+- Developed an Apex Trigger on the Attendance object to update Student records automatically.
+- Automated Total Working Days and Number of Days Present calculations.
+- Improved data accuracy and reduced manual updates.
+
+## Phase 6: Custom Development with Apex Class & Lightning Web Components (LWC)
+- Used Visual Studio Code (VS Code) for Salesforce development and deployment.
+- Developed an Apex Class to fetch and process student-related data for the frontend.
+- Built Lightning Web Components (LWC) with custom HTML and JavaScript to display student information interactively.
+- Integrated backend logic with frontend to deliver real-time dashboards.
+
+## Phase 7: Automated Notifications with Record-Triggered Flow
+- Created a Record-Triggered Flow to send emails to parents when a student’s exam percentage falls below 35%.
+- Configured the flow to fetch Parent Email and include exam details in the email content.
+- Verified functionality with screenshots of received emails.
+
+## Phase 8: Project Deployment & Salesforce Integration
+- Showcased the Salesforce DX (SFDX) project structure in VS Code.
+- Deployed Apex classes and LWCs to the Salesforce Developer Org using SFDX commands.
+- Ensured all custom logic and UI components were successfully integrated.
+
+## Phase 9: Final Application Showcase
+- Displayed the final Lightning App interface with a complete student management dashboard.
+- Showcased student academic, attendance, and activity details within the app.
+- Provided forms for adding new records: Student, Attendance, Academic, and Activity.
+- Highlighted the interactive, user-friendly interface and seamless navigation across sections.
