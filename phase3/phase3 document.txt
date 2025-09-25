@@ -1,5 +1,0 @@
-In this phase, the data structure of the Student Performance Tracker app was designed by creating relationships, layouts, and visual models to ensure smooth tracking of student information. 
-Lookup relationships were defined so that Attendance, Grades, and Extracurricular Activities are all linked to the Student object. 
-This allows every attendance record, grade, or activity to be associated with the correct student.
-The Student Page Layout was customized by creating new sections — Personal Information (Name, Roll No, DOB, Gender) and Contact Information (Contact Number, Parent Email). 
-A Compact Layout was also configured for the Student object, displaying key fields such as Student Name, Roll Number, Class, and Contact Number at the top of the record page for quick insights. Finally, the Schema Builder was used to visualize the object model and confirm that Student is correctly connected with Attendance, Grades, and Activities.
